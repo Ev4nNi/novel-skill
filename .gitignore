@@ -1,0 +1,43 @@
+# 操作系统
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE 和编辑器
+.vscode/
+.idea/
+*.code-workspace
+*.sublime-workspace
+
+# Node 相关
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Python 相关
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+
+# 日志和临时文件
+*.log
+.tmp/
+tmp/
+
+# 系统文件
+.env
+.env.local
+.DS_Store
+
+# 依赖和构建
+dist/
+build/
+.cache/
+
+docs/

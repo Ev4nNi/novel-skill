@@ -3,6 +3,12 @@
 ````markdown
 # [[Character Name]]
 
+## User Confirmation
+- Role framework confirmed:
+- Relationship scope confirmed:
+- Arc depth confirmed:
+- Keep as major or minor character:
+
 ## Identity
 - Role:
 - Public identity:

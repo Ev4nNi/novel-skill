@@ -3,6 +3,12 @@
 ````markdown
 # Worldbuilding Core
 
+## User Confirmation
+- Scope confirmed:
+- Rule complexity confirmed:
+- Tone confirmed:
+- Hard limits confirmed:
+
 ## Overview
 - Premise:
 - Genre mode:

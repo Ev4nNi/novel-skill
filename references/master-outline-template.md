@@ -3,6 +3,12 @@
 ````markdown
 # Master Outline
 
+## User Confirmation
+- Ending style confirmed:
+- Conflict scale confirmed:
+- Pacing scope confirmed:
+- Number of major arcs confirmed:
+
 ## Story Promise
 - Premise:
 - Target readership:

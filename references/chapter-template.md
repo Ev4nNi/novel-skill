@@ -3,6 +3,12 @@
 ````markdown
 # Chapter XXX
 
+## User Confirmation
+- This chapter's job confirmed:
+- Point of view confirmed:
+- Conflict level confirmed:
+- Information release confirmed:
+
 ## Chapter Card
 - Objective:
 - Conflict:
@@ -17,4 +23,5 @@
 - Point of view:
 - Required callbacks:
 - Required continuity checks:
+- Prose guide checked:
 ````
