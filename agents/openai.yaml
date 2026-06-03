@@ -1,0 +1,7 @@
+interface:
+  display_name: "Novel Skill"
+  short_description: "Plan and maintain long-form novels with an Obsidian-first workflow."
+  default_prompt: "Use $novel-skill to build and maintain a long-form novel project from idea to chapter drafting."
+
+policy:
+  allow_implicit_invocation: true
