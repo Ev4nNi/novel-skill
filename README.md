@@ -4,33 +4,34 @@ A structured, 8-phase workflow for building and maintaining long-form novel proj
 
 ## 8 Phases
 
-```text
-Phase 0  Spark            -> 00-project/spark.md
-Phase 1  Positioning      -> 00-project/positioning.md
-Phase 2  World            -> 01-worldbuilding/
-Phase 3  Characters       -> 02-characters/
-Phase 4  Master Outline   -> 03-plot/master-outline.md
-Phase 5  Volumes          -> 04-volumes/  (per-volume Pre-Volume Review required)
-Phase 6  Chapters         -> 05-chapter-cards/  (per-chapter Pre-Chapter Brief required)
-Phase 7  Prose            -> 06-chapter-drafts/  (Micro-Repair required after each chapter)
-```
+| # | Phase File | Phase |
+|---|---|---|
+| 0 | `phases/00-overview.md` | **Cross-phase rules** (read first, every time) |
+| 1 | `phases/01-spark.md` | Phase 0 — Spark → `00-project/spark.md` |
+| 2 | `phases/02-positioning.md` | Phase 1 — Positioning → `00-project/positioning.md` |
+| 3 | `phases/03-world.md` | Phase 2 — World → `01-worldbuilding/` |
+| 4 | `phases/04-characters.md` | Phase 3 — Characters → `02-characters/` |
+| 5 | `phases/05-master-outline.md` | Phase 4 — Master Outline → `03-plot/` |
+| 6 | `phases/06-volumes.md` | Phase 5 — Volumes → `04-volumes/` + `07-pre/volumes/` |
+| 7 | `phases/07-chapters.md` | Phase 6 — Chapters → `05-chapter-cards/` + `07-pre/chapters/` |
+| 8 | `phases/08-prose.md` | Phase 7 — Prose → `06-chapter-drafts/` |
 
 Plus:
 
-- Volume Repair after every volume
-- Project Repair after all volumes (optional)
+- Volume Repair after every volume → `10-review/volume-reports/`
+- Project Repair after all volumes (optional) → `10-review/project-repair.md`
 
 ## Two-Tier Repair
 
 | Level | Trigger | Output |
 | --- | --- | --- |
-| Micro-Repair | After every chapter draft | `09-review/micro-reports/Chapter-XXX-repair.md` |
-| Volume Repair | After every volume completes | `09-review/volume-reports/Volume-XX-repair.md` |
-| Project Repair | After all volumes (optional) | `09-review/project-repair.md` |
+| Micro-Repair | After every chapter draft | `10-review/micro-reports/Chapter-XXX-repair.md` |
+| Volume Repair | After every volume completes | `10-review/volume-reports/Volume-XX-repair.md` |
+| Project Repair | After all volumes (optional) | `10-review/project-repair.md` |
 
 ## Decision Log
 
-`09-review/decisions-log.md` is the append-only record of every phase confirmation, conflict resolution, skip, rollback, and repair completion.
+`10-review/decisions-log.md` is the append-only record of every phase confirmation, conflict resolution, skip, rollback, and repair completion.
 
 ## Skip and Rollback
 
@@ -61,4 +62,14 @@ All templates live in `references/`:
 
 - `00-project/正文写作指南.md` must exist before any chapter draft is written
 - `00-project/progress.md` must be updated on every phase transition
-- `09-review/decisions-log.md` must be updated on every confirmed decision
+- `10-review/decisions-log.md` must be updated on every confirmed decision
+
+## Scripts
+
+Three helper scripts live in `scripts/`:
+
+- `scripts/check_dash.py` — quick punctuation sweep (read-only)
+- `scripts/fix_dash.py` — apply agreed fixes (read-write, idempotent)
+- `scripts/check_density.py` — detailed density audit (read-only)
+
+All operate on `06-chapter-drafts/` by default. Pass a different folder as the first CLI argument.

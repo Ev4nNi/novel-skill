@@ -4,6 +4,8 @@
   - 双引号 + 逗号 -> 双引号
   - 句末多余逗号 (。，/！，/？，/；，/：，)
   - 行首逗号
+  - 章节标题检查 (警告, 不自动修复)
+  - 字数检查 (警告, 不自动处理)
   - 破折号 (em-dash — / en-dash – / horizontal bar ― / 连续 -- / 全角 ——):
       1. 行首破折号 -> 跳过 (Markdown 列表标记, 但正文不应有)
       2. 末尾破折号 (后面无字符) -> 删除
@@ -25,47 +27,48 @@ import os
 import re
 import sys
 
-FOLDER = r'd:\programproject\novels\悬疑小说\06-chapter-drafts'
+# 让本目录下的模块可以被 import (复用 check_dash 的工具)
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+if SCRIPT_DIR not in sys.path:
+    sys.path.insert(0, SCRIPT_DIR)
+
+from check_dash import (
+    BUDGET_DASH,
+    BUDGET_ELLIPSIS,
+    BUDGET_QUOTE,
+    CN_CHAR_RE,
+    DASH_CHARS,
+    DASH_RE,
+    HALF_WIDTH_QUOTE_RE,
+    LINE_START_DASH_RE,
+    NESTED_QUOTE_RE,
+    TONE_WORDS,
+    TRAILING_DASH_RE,
+    TRANSITION_WORDS,
+    EXAMPLE_WORDS,
+    FULL_WIDTH_QUOTE_LEFT,
+    FULL_WIDTH_QUOTE_RIGHT,
+    SEMANTIC_REPLACE,
+    ELLIPSIS_RE,
+    DASH_BEFORE_QUOTE_RE,
+    MIN_CHARS,
+    MAX_CHARS,
+    IDEAL_MIN_CHARS,
+    IDEAL_MAX_CHARS,
+    check_title,
+    word_count_status,
+)
+
+# 默认扫描目录 (相对路径, 相对于当前工作目录)
+# 用法: python scripts/fix_dash.py            -> 修复 ./06-chapter-drafts
+#       python scripts/fix_dash.py my_drafts  -> 修复 ./my_drafts
+DEFAULT_FOLDER = '06-chapter-drafts'
+FOLDER = DEFAULT_FOLDER
 
 # 各种破折号变体
-DASH_CHARS = ['——', '――', '—', '–', '―']
-DASH_RE = re.compile(r'(——|――|—|–|―)')
-
 # 行首破折号: 在行首 (可能有空白) 跟随空白
-LINE_START_DASH_RE = re.compile(r'(?m)^\s*(——|――|—|–|―)\s')
-
 # 末尾破折号: 破折号出现在字符串末尾 (允许尾随空白/换行)
-TRAILING_DASH_RE = re.compile(r'(——|――|—|–|―)\s*$')
-
 # 破折号紧贴左/右中文双引号
-DASH_BEFORE_QUOTE_RE = re.compile(r'(——|――|—|–|―)(["\u201d\u2019])')
-
-# 省略号各种形式
-ELLIPSIS_RE = re.compile(r'\.\.\.|。。|\u2026\u2026|……|\u2026')
-
-# 半角引号
-HALF_WIDTH_QUOTE_RE = re.compile(r'["\']')
-
-# 全角左/右引号
-FULL_WIDTH_QUOTE_LEFT = '\u201c'
-FULL_WIDTH_QUOTE_RIGHT = '\u201d'
-
-# 嵌套引号
-NESTED_QUOTE_RE = re.compile(r'["\u201c]([^"\u201c"\u201d]*)["\u201d]([^"\u201c"\u201d]*)["\u201d]')
-
-# 语义判断词
-TONE_WORDS = '啊哦呀呢嘛吧唉哼嘿哈呵嗯呜'
-TRANSITION_WORDS = '但可却然而不过只是可惜'
-EXAMPLE_WORDS = '如比如例如即也就是'
-
-# 密度预算 (per chapter, 约 3000 字)
-BUDGET_DASH = 6
-BUDGET_ELLIPSIS = 6
-BUDGET_QUOTE = 30
-
-# 是否启用语义替换 (默认 False = 严格删除模式)
-# 若改为 True, 中间破折号会按语义替换; False 则一律删除
-SEMANTIC_REPLACE = False
 
 
 def classify_middle_dash(text_before: str, text_after: str) -> str:
@@ -292,14 +295,29 @@ def count_quotes(s: str) -> int:
     return len(re.findall(r'["\u201d]', s))
 
 
-def main() -> None:
+def count_chinese_chars(s: str) -> int:
+    return len(CN_CHAR_RE.findall(s))
+
+
+def main() -> int:
+    global FOLDER
+    if len(sys.argv) > 1:
+        FOLDER = sys.argv[1]
+
     # 兼容 Windows 控制台 (默认 GBK 无法输出部分 Unicode 字符)
     try:
         sys.stdout.reconfigure(encoding='utf-8')
     except Exception:
         pass
+
+    if not os.path.isdir(FOLDER):
+        print(f'[!] 目录不存在: {FOLDER}')
+        return 1
+
     total_punct = 0
     all_chapter_stats = []
+    title_errors = []
+    length_errors = []
 
     for f in sorted(os.listdir(FOLDER)):
         if not f.endswith('.md'):
@@ -307,6 +325,16 @@ def main() -> None:
         p = os.path.join(FOLDER, f)
         with open(p, 'r', encoding='utf-8') as fp:
             original = fp.read()
+
+        # 标题检查 (硬错误, 但 fix_dash 不会自动修复, 只警告)
+        title_ok, title_msg = check_title(original)
+        if not title_ok:
+            title_errors.append((f, title_msg))
+
+        # 字数检查 (警告, fix_dash 不处理)
+        cn = count_chinese_chars(original)
+        if cn < MIN_CHARS or cn > MAX_CHARS:
+            length_errors.append((f, cn))
 
         s, punct_diff = fix_punct_in_text(original)
         s, dash_stats = fix_dash_in_text(s)
@@ -329,6 +357,7 @@ def main() -> None:
                 'dashes': count_dashes(s),
                 'ellipsis': count_ellipsis(s),
                 'quotes': count_quotes(s),
+                'cn_chars': count_chinese_chars(s),
             },
         }
         all_chapter_stats.append((f, chapter_stats))
@@ -344,20 +373,38 @@ def main() -> None:
             if v:
                 print(f'  引号 {k}: {v}')
 
+    if title_errors:
+        print('\n[HARD ERROR] 以下文件缺少合法章节标题, 必须在 Punctuation Sweep 之前修复:')
+        for f, msg in title_errors:
+            print(f'  - {f}: {msg}')
+        print('  期望格式: 第N章"title" (N 为中文数字, 如 第一章"雨夜来客")')
+        print('  注意: fix_dash 不会自动修复标题, 必须人工编辑章节')
+
+    if length_errors:
+        print('\n[HARD WARNING] 以下文件字数越界, 需要拆分或合并:')
+        for f, cnt in length_errors:
+            print(f'  - {f}: {cnt} 字 ({word_count_status(cnt)})')
+        print(f'  目标: {IDEAL_MIN_CHARS}-{IDEAL_MAX_CHARS} (理想), {MIN_CHARS}-{MAX_CHARS} (允许范围)')
+        print('  注意: fix_dash 不会自动调整字数, 必须人工编辑或拆分章节')
+
     print(f'\n总计标点修复: {total_punct} 字符')
 
     # 密度总览
     if all_chapter_stats:
         print('\n=== 修复后密度总览 ===')
-        print(f'{"文件":<30} {"破折号":>6} {"省略号":>6} {"引号":>6} {"状态":>8}')
+        print(f'{"文件":<30} {"字数":>5} {"破折号":>6} {"省略号":>6} {"引号":>6} {"状态":>8}')
         for f, cs in all_chapter_stats:
             d = cs['density']
             over = (d['dashes'] > BUDGET_DASH
                     or d['ellipsis'] > BUDGET_ELLIPSIS
-                    or d['quotes'] > BUDGET_QUOTE)
+                    or d['quotes'] > BUDGET_QUOTE
+                    or d['cn_chars'] < MIN_CHARS
+                    or d['cn_chars'] > MAX_CHARS)
             status = '[!] 超出' if over else 'OK'
-            print(f'{f:<30} {d["dashes"]:>6} {d["ellipsis"]:>6} {d["quotes"]:>6} {status:>8}')
+            print(f'{f:<30} {d["cn_chars"]:>5} {d["dashes"]:>6} {d["ellipsis"]:>6} {d["quotes"]:>6} {status:>8}')
+
+    return 0
 
 
 if __name__ == '__main__':
-    main()
+    sys.exit(main())

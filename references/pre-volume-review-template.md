@@ -1,6 +1,6 @@
 # Pre-Volume Review Template
 
-Before drafting any volume card, complete this review and save the filled file alongside the volume card in `04-volumes/` (e.g. `04-volumes/Volume-01-pre-review.md`).
+Before drafting any volume card, complete this review and save the filled file to `07-pre/volumes/Volume-XX-pre-review.md`.
 
 ````markdown
 # Volume XX Pre-Review

@@ -1,6 +1,6 @@
 # Volume Template
 
-Use this for `04-volumes/Volume-XX.md` (Phase 5). Requires a Pre-Volume Review file at `04-volumes/Volume-XX-pre-review.md`.
+Use this for `04-volumes/Volume-XX.md` (Phase 5). Requires a Pre-Volume Review file at `07-pre/volumes/Volume-XX-pre-review.md`.
 
 ````markdown
 # Volume XX Outline
@@ -8,7 +8,7 @@ Use this for `04-volumes/Volume-XX.md` (Phase 5). Requires a Pre-Volume Review f
 ## Status
 - Phase: 5
 - Pre-Volume Review: (link to `Volume-XX-pre-review.md`)
-- Post-Volume Repair: (link to `09-review/volume-reports/Volume-XX-repair.md` when complete)
+- Post-Volume Repair: (link to `10-review/volume-reports/Volume-XX-repair.md` when complete)
 - State: draft / confirmed
 
 ## Pre-Volume Recap
@@ -67,5 +67,5 @@ Use this for `04-volumes/Volume-XX.md` (Phase 5). Requires a Pre-Volume Review f
 - Repair timeline files:
 - Repair lore-index:
 - Repair prose-writing guide if needed:
-- Log completion in `09-review/decisions-log.md`
+- Log completion in `10-review/decisions-log.md`
 ````

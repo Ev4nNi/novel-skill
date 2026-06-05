@@ -1,6 +1,8 @@
 """检查中文小说正文中的标点和风格问题, 附带修复建议。
 
 检查项:
+  - 章节标题合法性 (硬错误)
+  - 中文字数 (硬警告, 越界需处理)
   - 各种破折号残留 (em-dash — / en-dash – / horizontal bar ― / 全角 —— / 连续 --)
   - 省略号格式 (... / 。。 / ……)
   - 引号格式 (半角 / 全角 / 嵌套)
@@ -19,7 +21,15 @@ import os
 import re
 import sys
 
-FOLDER = r'd:\programproject\novels\悬疑小说\06-chapter-drafts'
+# 项目根目录 (skill 所在)
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)
+
+# 默认扫描目录 (相对路径, 相对于当前工作目录)
+# 用法: python scripts/check_dash.py            -> 扫描 ./06-chapter-drafts
+#       python scripts/check_dash.py my_drafts  -> 扫描 ./my_drafts
+DEFAULT_FOLDER = '06-chapter-drafts'
+FOLDER = DEFAULT_FOLDER
 
 # 各种破折号变体
 DASH_CHARS = ['——', '――', '—', '–', '―']
@@ -46,7 +56,11 @@ NESTED_QUOTE_RE = re.compile(r'["\u201c][^"\u201c]*["\u201d][^"\u201c]*["\u201d]
 # 全角引号配对 (用于统计)
 FULL_WIDTH_QUOTE_RE = re.compile(r'["\u201d]')
 
-# Markdown 结构标记 - 这些在正文里是不允许的
+# 全角左/右引号 (供 fix_dash 复用)
+FULL_WIDTH_QUOTE_LEFT = '\u201c'
+FULL_WIDTH_QUOTE_RIGHT = '\u201d'
+
+# Markdown 结构标记 - 这些在正文里是不不允许的
 MD_BOLD_RE = re.compile(r'\*\*[^*]+\*\*|__[^_]+__')
 MD_ITALIC_RE = re.compile(r'(?<!\*)\*[^*]+\*(?!\*)|(?<!_)_[^_]+_(?!_)')
 MD_HEADER_RE = re.compile(r'(?m)^#{1,6}\s+\S')
@@ -54,6 +68,14 @@ MD_LIST_RE = re.compile(r'(?m)^\s*[-*+]\s+\S|^\s*\d+\.\s+\S|^\s*-\s*\[\s*[xX ]\s
 MD_BLOCKQUOTE_RE = re.compile(r'(?m)^>\s+\S')
 MD_CODE_SPAN_RE = re.compile(r'`[^`\n]+`')
 MD_HR_RE = re.compile(r'(?m)^[-*_]{3,}$')
+
+# 章节标题正则: 第N章"title"
+TITLE_RE = re.compile(
+    r'^第[\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d\u5341\u767e\u5343\u96f6\u3007\u4e24]+章["\u201c][^"\u201d]+["\u201d]$'
+)
+
+# 中文字符
+CN_CHAR_RE = re.compile(r'[\u4e00-\u9fff]')
 
 # 语义判断词
 TONE_WORDS = '啊哦呀呢嘛吧唉哼嘿哈呵嗯呜'
@@ -64,6 +86,12 @@ EXAMPLE_WORDS = '如比如例如即也就是'
 BUDGET_DASH = 6
 BUDGET_ELLIPSIS = 6
 BUDGET_QUOTE = 30
+
+# 字数阈值
+MIN_CHARS = 1500
+IDEAL_MIN_CHARS = 2500
+IDEAL_MAX_CHARS = 3500
+MAX_CHARS = 5000
 
 # 是否启用语义替换 (默认 False = 严格删除模式)
 # 若改为 True, 中间破折号会按语义替换; False 则一律删除
@@ -125,6 +153,51 @@ def count_quotes(s: str) -> int:
     return (half + full) // 2
 
 
+def count_chinese_chars(s: str) -> int:
+    """统计中文字符数."""
+    return len(CN_CHAR_RE.findall(s))
+
+
+def check_title(s: str) -> tuple[bool, str]:
+    """检查第一行是否为合法的章节标题.
+
+    返回: (is_valid, message)
+    """
+    if not s.strip():
+        return False, '文件为空, 缺少章节标题'
+    first_line = s.lstrip('\n').split('\n', 1)[0].rstrip()
+    if not first_line:
+        return False, '第一行为空, 缺少章节标题'
+    if TITLE_RE.match(first_line):
+        return True, first_line
+    if not first_line.startswith('第'):
+        return False, f'第一行不以"第"开头, 当前: {first_line!r}'
+    if '章' not in first_line:
+        return False, f'第一行缺少"章"字, 当前: {first_line!r}'
+    if re.match(r'^第\d+章', first_line):
+        return False, f'第N章必须使用中文数字, 当前: {first_line!r}'
+    if first_line.lstrip().startswith('#'):
+        return False, f'第一行不能是 Markdown 标题, 当前: {first_line!r}'
+    if '"' not in first_line and '\u201c' not in first_line:
+        return False, f'标题必须用全角引号包裹, 当前: {first_line!r}'
+    if first_line.endswith(('。', '，', '；', '：', '!', '?', '！', '？')):
+        return False, f'标题末尾不能有标点, 当前: {first_line!r}'
+    return False, f'标题格式不符合 第N章"title", 当前: {first_line!r}'
+
+
+def word_count_status(cnt: int) -> str:
+    """根据中文字数返回状态字符串."""
+    if cnt < MIN_CHARS:
+        return f'过短 (低于 {MIN_CHARS})'
+    if cnt > MAX_CHARS:
+        return f'超长 (超过 {MAX_CHARS})'
+    if cnt < IDEAL_MIN_CHARS:
+        return f'可接受 (低于理想 {IDEAL_MIN_CHARS})'
+    if cnt > IDEAL_MAX_CHARS:
+        return f'可接受 (高于理想 {IDEAL_MAX_CHARS})'
+    return 'OK (理想范围)'
+
+
 def check_file(path: str, filename: str) -> tuple[list[str], dict]:
     with open(path, 'r', encoding='utf-8') as fp:
         s = fp.read()
@@ -135,7 +208,20 @@ def check_file(path: str, filename: str) -> tuple[list[str], dict]:
         'ellipsis_count': 0,
         'quote_count': 0,
         'md_marks': 0,
+        'title_ok': False,
+        'cn_chars': 0,
     }
+
+    # 章节标题检查 (硬错误, 不允许 exception)
+    title_ok, title_msg = check_title(s)
+    stats['title_ok'] = title_ok
+    if not title_ok:
+        issues.insert(0, f'  [HARD ERROR] 章节标题: {title_msg}')
+        issues.insert(1, f'    期望格式: 第N章"title" (N 为中文数字, 如 第一章"雨夜来客")')
+        issues.insert(2, '')
+
+    # 中文字数
+    stats['cn_chars'] = count_chinese_chars(s)
 
     # 行首位置
     line_start_positions = {m.start(1) for m in LINE_START_DASH_RE.finditer(s)}
@@ -232,15 +318,36 @@ def check_file(path: str, filename: str) -> tuple[list[str], dict]:
             issues.append(f'    - {w}')
         issues.append('    处理: 编辑章节 或 在 decisions-log.md 添加 prose-style-exception 行')
 
+    # 字数警告
+    cn = stats['cn_chars']
+    if cn < MIN_CHARS or cn > MAX_CHARS:
+        issues.append('')
+        issues.append(f'  [HARD WARNING] 字数 {cn} {word_count_status(cn)}')
+        issues.append(f'    处理: 拆分章节 (过长) 或合并相邻章节 (过短), 记录到 decisions-log.md')
+
+    # 标题状态汇总
+    if not stats['title_ok']:
+        issues.append('')
+        issues.append('  [HARD ERROR] 章节标题无效, 必须在 Punctuation Sweep 之前修复')
+
     return issues, stats
 
 
-def main() -> None:
+def main() -> int:
+    global FOLDER
+    if len(sys.argv) > 1:
+        FOLDER = sys.argv[1]
+
     # 兼容 Windows 控制台 (默认 GBK 无法输出部分 Unicode 字符)
     try:
         sys.stdout.reconfigure(encoding='utf-8')
     except Exception:
         pass
+
+    if not os.path.isdir(FOLDER):
+        print(f'[!] 目录不存在: {FOLDER}')
+        return 1
+
     total = 0
     all_stats = []
     for f in sorted(os.listdir(FOLDER)):
@@ -258,13 +365,20 @@ def main() -> None:
 
     # 密度总览
     print('\n=== 密度总览 ===')
-    print(f'{"文件":<30} {"破折号":>6} {"省略号":>6} {"引号":>6} {"MD":>4}')
+    print(f'{"文件":<30} {"标题":<4} {"字数":>5} {"破折号":>6} {"省略号":>6} {"引号":>6} {"MD":>4}')
     for f, s in all_stats:
         flag = ''
-        if s['dash_count'] > BUDGET_DASH or s['ellipsis_count'] > BUDGET_ELLIPSIS or s['quote_count'] > BUDGET_QUOTE or s['md_marks'] > 0:
+        if not s['title_ok']:
+            flag = ' [ERR]'
+        elif s['cn_chars'] < MIN_CHARS or s['cn_chars'] > MAX_CHARS:
+            flag = ' [!LEN]'
+        elif s['dash_count'] > BUDGET_DASH or s['ellipsis_count'] > BUDGET_ELLIPSIS or s['quote_count'] > BUDGET_QUOTE or s['md_marks'] > 0:
             flag = ' [!]'
-        print(f'{f:<30} {s["dash_count"]:>6} {s["ellipsis_count"]:>6} {s["quote_count"]:>6} {s["md_marks"]:>4}{flag}')
+        title_status = 'OK' if s['title_ok'] else 'NO'
+        print(f'{f:<30} {title_status:<4} {s["cn_chars"]:>5} {s["dash_count"]:>6} {s["ellipsis_count"]:>6} {s["quote_count"]:>6} {s["md_marks"]:>4}{flag}')
+
+    return 0
 
 
 if __name__ == '__main__':
-    main()
+    sys.exit(main())

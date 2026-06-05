@@ -1,6 +1,6 @@
 # Pre-Chapter Brief Template
 
-Before drafting any chapter card, complete this brief and save it as `05-chapter-cards/Chapter-XXX-pre-brief.md`. The brief is required input for the chapter card.
+Before drafting any chapter card, complete this brief and save it as `07-pre/chapters/Chapter-XXX-pre-brief.md`. The brief is required input for the chapter card.
 
 ````markdown
 # Chapter XXX Pre-Brief

@@ -1,6 +1,6 @@
 # Decisions Log Template
 
-Append-only log of every non-content decision. Save to `09-review/decisions-log.md`.
+Append-only log of every non-content decision. Save to `10-review/decisions-log.md`.
 
 ````markdown
 # Decisions Log

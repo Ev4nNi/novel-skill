@@ -1,6 +1,6 @@
 # Chapter Template
 
-Use this for `05-chapter-cards/Chapter-XXX.md` (Phase 6). Requires a Pre-Chapter Brief file at `05-chapter-cards/Chapter-XXX-pre-brief.md`.
+Use this for `05-chapter-cards/Chapter-XXX.md` (Phase 6). Requires a Pre-Chapter Brief file at `07-pre/chapters/Chapter-XXX-pre-brief.md`.
 
 ````markdown
 # Chapter XXX

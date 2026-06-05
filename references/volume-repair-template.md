@@ -1,6 +1,6 @@
 # Volume Repair Template
 
-After every volume completes, fill this report and save it as `09-review/volume-reports/Volume-XX-repair.md`. The volume repair is mandatory before starting the next volume's Pre-Volume Review.
+After every volume completes, fill this report and save it as `10-review/volume-reports/Volume-XX-repair.md`. The volume repair is mandatory before starting the next volume's Pre-Volume Review.
 
 ````markdown
 # Volume XX Repair

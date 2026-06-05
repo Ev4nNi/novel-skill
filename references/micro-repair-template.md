@@ -1,6 +1,6 @@
 # Micro-Repair Template
 
-After every chapter draft, fill this report and save it as `09-review/micro-reports/Chapter-XXX-repair.md`. The micro-repair is mandatory before starting the next chapter.
+After every chapter draft, fill this report and save it as `10-review/micro-reports/Chapter-XXX-repair.md`. The micro-repair is mandatory before starting the next chapter.
 
 The first block of the report is the **Punctuation Sweep**, which is mandatory before any other micro-repair work.
 
@@ -25,7 +25,7 @@ The first block of the report is the **Punctuation Sweep**, which is mandatory b
 - Punctuation sweep signed off:
 
 ## Style Density Check (mandatory)
-- Word count:
+- Word count (Chinese characters):
 - Dash count (all variants):      budget ≤ 6, ideal ≤ 3
 - Ellipsis count (`……` only):   budget ≤ 6, ideal ≤ 3
 - Quote count (dialogue + nested + scare):  budget ≤ 30, ideal ≤ 20
@@ -34,6 +34,9 @@ The first block of the report is the **Punctuation Sweep**, which is mandatory b
   - any found must be converted to natural prose before Micro-Repair proceeds
 - Over budget? (yes/no):
   - if yes: prose-style-exception row appended to decisions-log.md, or chapter edited
+- Word count within range? (yes/no):
+  - target: 1500-5000 Chinese characters per chapter
+  - if out of range: split chapter or merge with adjacent, log a chapter-length event
 - Style density signed off:
 
 ## User Confirmation

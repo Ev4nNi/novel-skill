@@ -22,25 +22,30 @@ novel-project/
     master-outline.md         # Phase 4
     foreshadowing.md          # Phase 4+
     reveals.md                # Phase 4+
-  04-volumes/
-    Volume-01-pre-review.md   # Phase 5 (mandatory per volume)
-    Volume-01.md              # Phase 5
-    Volume-02-pre-review.md
+  04-volumes/                 # Phase 5 — volume cards only (stable products)
+    Volume-01.md
     Volume-02.md
     ...
-  05-chapter-cards/
-    Chapter-001-pre-brief.md  # Phase 6 (mandatory per chapter)
-    Chapter-001.md            # Phase 6
-    Chapter-002-pre-brief.md
+  05-chapter-cards/           # Phase 6 — chapter cards only (stable products)
+    Chapter-001.md
     Chapter-002.md
     ...
   06-chapter-drafts/
     Chapter-001.md            # Phase 7
     Chapter-002.md
     ...
-  07-timeline/               # Phase 4+
-  08-lore-index/              # Phase 4+ (rapid lookup index)
-  09-review/
+  07-pre/                     # Intermediate products (pre-review / pre-brief)
+    volumes/
+      Volume-01-pre-review.md   # Phase 5 (mandatory per volume)
+      Volume-02-pre-review.md
+      ...
+    chapters/
+      Chapter-001-pre-brief.md  # Phase 6 (mandatory per chapter)
+      Chapter-002-pre-brief.md
+      ...
+  08-timeline/                # Phase 4+
+  09-lore-index/              # Phase 4+ (rapid lookup index)
+  10-review/
     decisions-log.md          # central decision log (append-only)
     micro-reports/
       Chapter-001-repair.md   # Phase 7 (mandatory per chapter)
@@ -62,13 +67,13 @@ Do not build every folder in one pass and then start writing the whole story. Mo
 3. **Phase 2 World** — write rules, factions, geography, power system in `01-worldbuilding/`
 4. **Phase 3 Characters** — major character cards in `02-characters/`
 5. **Phase 4 Master Outline** — `03-plot/master-outline.md`, `foreshadowing.md`, `reveals.md`
-6. **Phase 5 Volumes** — per volume: Pre-Volume Review, Volume card, Volume Repair
-7. **Phase 6 Chapters** — per chapter: Pre-Chapter Brief, Chapter card
-8. **Phase 7 Prose** — per chapter: Draft, Micro-Repair
+6. **Phase 5 Volumes** — per volume: Pre-Volume Review → Volume card → Volume Repair
+7. **Phase 6 Chapters** — per chapter: Pre-Chapter Brief → Chapter card
+8. **Phase 7 Prose** — per chapter: Draft → Punctuation Sweep → Micro-Repair
 
-Advance only after the user confirms the current phase and the confirmation is logged in `09-review/decisions-log.md`.
+Advance only after the user confirms the current phase and the confirmation is logged in `10-review/decisions-log.md`.
 
-A previous phase can be revisited only via a logged rollback (see SKILL.md > Skip & Rollback Rules).
+A previous phase can be revisited only via a logged rollback (see `SKILL.md`).
 
 ## Folder Responsibilities
 
@@ -78,18 +83,19 @@ A previous phase can be revisited only via a logged rollback (see SKILL.md > Ski
 - `00-project/progress.md`: current phase, last completed phase, current volume, current chapter, recent decisions (mirror of decisions log)
 - `01-worldbuilding/`: rules, factions, geography, power system — split by topic into multiple files
 - `02-characters/`: major character cards; `minor-characters.md` holds one-line entries for minor cast
-- `03-plot/master-outline.md`: story promise, main spine, escalation, resolution
+- `03-plot/master-outline.md`: story proposition, main spine, escalation, resolution
 - `03-plot/foreshadowing.md`: setup / expected payoff / actual payoff table
 - `03-plot/reveals.md`: revealed truths and the chapter that revealed them
-- `04-volumes/`: per volume — Pre-Volume Review and Volume card
-- `05-chapter-cards/`: per chapter — Pre-Chapter Brief and Chapter card
+- `04-volumes/`: **volume cards only** (stable products). Pre-Volume Reviews go in `07-pre/volumes/`
+- `05-chapter-cards/`: **chapter cards only** (stable products). Pre-Chapter Briefs go in `07-pre/chapters/`
 - `06-chapter-drafts/`: per chapter — final prose draft
-- `07-timeline/`: chronology and event log
-- `08-lore-index/`: rapid index of locations, terms, items, characters for consistency checks
-- `09-review/decisions-log.md`: append-only log of phase confirmations, conflicts, repairs, skips, rollbacks
-- `09-review/micro-reports/`: per-chapter repair report
-- `09-review/volume-reports/`: per-volume repair report
-- `09-review/project-repair.md`: whole-project repair after the final volume
+- `07-pre/`: **intermediate products only** (pre-reviews, pre-briefs). These are read during planning, then archived. They are NOT read during prose drafting.
+- `08-timeline/`: chronology and event log
+- `09-lore-index/`: rapid index of locations, terms, items, characters for consistency checks
+- `10-review/decisions-log.md`: append-only log of phase confirmations, conflicts, repairs, skips, rollbacks
+- `10-review/micro-reports/`: per-chapter repair report
+- `10-review/volume-reports/`: per-volume repair report
+- `10-review/project-repair.md`: whole-project repair after the final volume
 
 ## Update Rules
 
@@ -98,21 +104,21 @@ A previous phase can be revisited only via a logged rollback (see SKILL.md > Ski
 - After every volume, run a Volume Repair and update master-outline, foreshadowing, reveals, timeline, lore-index.
 - After every prose-guide change, log it in the decision log.
 - In Obsidian mode, prefer `[[double links]]` for people, places, organizations, items, and events.
-- Every change to a project fact must be reflected in `08-lore-index/` so the index does not drift.
+- Every change to a project fact must be reflected in `09-lore-index/` so the index does not drift.
 
 ## Two-Tier Repair Triggers
 
 | Level | Trigger | File to create | Files to update |
 | --- | --- | --- | --- |
-| Micro-Repair | After every chapter draft | `09-review/micro-reports/Chapter-XXX-repair.md` | character / worldbuilding / foreshadowing / timeline / lore-index / progress |
-| Volume Repair | After every volume completes | `09-review/volume-reports/Volume-XX-repair.md` | master-outline / foreshadowing / reveals / timeline / lore-index / 正文写作指南 (if rhythm changes) |
-| Project Repair | After all volumes complete (optional) | `09-review/project-repair.md` | every file |
+| Micro-Repair | After every chapter draft | `10-review/micro-reports/Chapter-XXX-repair.md` | character / worldbuilding / foreshadowing / timeline / lore-index / progress |
+| Volume Repair | After every volume completes | `10-review/volume-reports/Volume-XX-repair.md` | master-outline / foreshadowing / reveals / timeline / lore-index / 正文写作指南 (if rhythm changes) |
+| Project Repair | After all volumes complete (optional) | `10-review/project-repair.md` | every file |
 
 Skipping a Micro-Repair blocks the next chapter. Skipping a Volume Repair blocks the next volume's Pre-Volume Review.
 
 ## Confirmation Record
 
-Track which phases are confirmed before moving on (each row also appears in `09-review/decisions-log.md`):
+Track which phases are confirmed before moving on (each row also appears in `10-review/decisions-log.md`):
 
 - Project mode confirmed:
 - Phase 0 Spark confirmed:

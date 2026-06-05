@@ -27,7 +27,7 @@ Use this template for `00-project/正文写作指南.md` (Phase 7). This file is
 
 ## Writing Style (Hard Rules — non-negotiable)
 
-These rules define the project's writing style. They are not suggestions. They are enforced by the Punctuation Sweep (`check_dash.py` / `fix_dash.py`) and verified in every Micro-Repair.
+These rules define the project's writing style. They are not suggestions. They are enforced by the Punctuation Sweep (`scripts/check_dash.py` / `scripts/fix_dash.py`) and verified in every Micro-Repair.
 
 ### 1. 人工书写 (manual handwriting), not Markdown
 
@@ -45,21 +45,42 @@ Markdown structure belongs in the chapter card and the repair report, **never** 
 
 ### 2. 破折号 / 省略号 / 引号 — 严禁过多使用
 
-These three marks are the "showy" punctuation of Chinese prose. They are easy to over-use and hard to read when they pile up. The Punctuation Sweep enforces a strict per-chapter budget. If a chapter is over budget, the user must either edit the chapter or log a `prose-style-exception` row in `09-review/decisions-log.md`.
+These three marks are the "showy" punctuation of Chinese prose. They are easy to over-use and hard to read when they pile up. The Punctuation Sweep enforces a strict per-chapter budget. If a chapter is over budget, the user must either edit the chapter or log a `prose-style-exception` row in `10-review/decisions-log.md`.
 
 | Mark | Per-chapter budget (≈3000 words) | Default action when over budget |
 | --- | --- | --- |
-| 破折号 (all variants: `—` `–` `―` `——` `――` `--`) | **≤ 6** total, ideally ≤ 3 | **delete** the dash, do not replace |
+| 破折号 (all variants: `—` `–` `――` `――` `--`) | **≤ 6** total, ideally ≤ 3 | **delete** the dash, do not replace |
 | 省略号 (`……` only) | **≤ 6** total, ideally ≤ 3 | **delete** the extra ellipsis |
 | 引号 (dialogue + nested + scare-quotes combined) | **≤ 30** total, ideally ≤ 20 | **delete** the unnecessary quote |
+| 中文字数 (Chinese character count) | ideal 2500-3500, acceptable 1500-5000 | **split or merge** the chapter |
 
 Density is **per chapter**, not per scene. If a single dialogue-heavy scene is over budget, the user is expected to either trim quotes or split the scene.
+
+The word count is a hard warning (not an exception-eligible style choice). It is a structural concern — chapters that are too short or too long are usually a sign of bad chapter boundaries, not a style preference.
 
 ### 3. Mark-specific rules
 
 - **破折号 (dashes).** Only used for a true break in thought or a hard aside. Never as a stand-in for a comma, never as decorative flourishes, never as Markdown list markers in the draft. The only legitimate form is the em-dash `—` (or full-width `——` for emphasis). Variants like `–` (en-dash), `―` (horizontal bar), and `--` (double hyphen) are normalization errors and are replaced with `—` or deleted.
 - **省略号 (ellipsis).** Only the 6-dot Chinese form `……` is allowed. The 3-dot `...` and the double-period `。。` are normalization errors and are normalized to `……` (or deleted if the chapter is over budget).
 - **引号 (quotation marks).** Allowed for direct speech and for marking a term that is being defined in the chapter. Disallowed: nested quotes (`""…""`), scare-quotes for emphasis, quoting a phrase the narrator is using as a stylistic device. If a phrase doesn't need a quote to be readable, remove the quote.
+
+### 4. Chapter Title (first line, mandatory)
+
+Every chapter draft MUST start with a title line. This is the only structural exception to the "no Markdown in the body" rule.
+
+- **Format:** `第N章"title"` — e.g. `第一章"雨夜来客"`, `第十二章"迷宫"`, `第一百零三章"重逢"`.
+- `第N章` uses **Chinese numerals** (一/二/三/…/十/百/千/零/〇). Arabic numerals (`第1章`) are not allowed in the title line.
+- The title is wrapped in **full-width Chinese quotes** `""`. The opening quote comes immediately after `章` (no space). The closing quote comes immediately after the last character of the title.
+- The title is the **only** content on the first line. No leading whitespace, no trailing punctuation after the closing quote, no Markdown hash header.
+- The title's quote pair counts as 1 引号 pair against the per-chapter budget (which is intentional — titles are allowed and expected to use 引号).
+- If the first line is missing or does not match this format, the Punctuation Sweep flags it as a hard error. **No exception allowed** — the title is mandatory and the chapter is invalid without it.
+- Examples of valid titles: `第一章"雨夜来客"`, `第二章"楼梯上的脚步声"`, `第三十章"真相"`
+- Examples of **invalid** titles:
+  - `第一章 雨夜来客` (no quotes)
+  - `第一章 "雨夜来客"` (space after 章)
+  - `第1章"雨夜来客"` (Arabic numeral)
+  - `# 第一章"雨夜来客"` (Markdown header)
+  - `第一章"雨夜来客"。` (trailing punctuation)
 
 ## Required Reading Before Drafting
 - Current chapter card
@@ -93,18 +114,18 @@ Density is **per chapter**, not per scene. If a single dialogue-heavy scene is o
 - Timeline updated if chronology changed
 - Lore-index updated if a new term / place / item appeared
 - `00-project/progress.md` updated
-- `09-review/decisions-log.md` updated
+- `10-review/decisions-log.md` updated
 
 ## Punctuation Rules (enforced by Punctuation Sweep)
 
-The skill runs `check_dash.py` and `fix_dash.py` against `06-chapter-drafts/` after every chapter draft. The rules below MUST match what the scripts apply. If you change these rules, update the scripts in the same commit and log a `prose-guide-update` event in `09-review/decisions-log.md`.
+The skill runs `scripts/check_dash.py` and `scripts/fix_dash.py` against `06-chapter-drafts/` after every chapter draft. The rules below MUST match what the scripts apply. If you change these rules, update the scripts in the same commit and log a `prose-guide-update` event in `10-review/decisions-log.md`.
 
 ### Dash handling
 
 - Line-start dash: keep (Markdown list marker — but see the Writing Style rule above: in the chapter draft itself, no line-start dashes are expected)
 - Trailing dash at end of file/paragraph: **delete**
 - Dash immediately before a closing quote (`"…—"`, `…—"`): **delete**
-- Middle dash in any other context: **delete by default.** Do not replace with `，` — the goal is fewer showy marks, not different showy marks. The semantic replacement (tone particle / example / transition) only fires when the user has explicitly opted in via a `prose-style-exception` row in `09-review/decisions-log.md`.
+- Middle dash in any other context: **delete by default.** Do not replace with `，` — the goal is fewer showy marks, not different showy marks. The semantic replacement (tone particle / example / transition) only fires when the user has explicitly opted in via a `prose-style-exception` row in `10-review/decisions-log.md`.
 - Variants (`–` en-dash, `―` horizontal bar, `——` full-width, `――` full-width alt, `--` double hyphen): normalize to `—` first, then apply the rules above. If the result is "delete", the variant is deleted.
 
 ### Ellipsis handling
