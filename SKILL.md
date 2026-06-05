@@ -22,6 +22,20 @@ Confirm the project structure with the user before each major stage. Do not trea
 7. **Skip and rollback are explicit.** If the user wants to jump or fall back, log the reason and impact in the decision log.
 8. **The prose guide is mandatory.** `00-project/正文写作指南.md` must exist before any chapter draft is written.
 
+## Hard Style Rules (read before every draft)
+
+These are non-negotiable. They are not "guidelines" or "preferences" — they are the writing style of the project, and they shape how every chapter is drafted.
+
+1. **The prose is 人工书写 (manually written), not Markdown.** No bullet lists, no bold/italic for emphasis, no headers, no inline code spans, no `>` blockquotes, no horizontal rules. The chapter draft is meant to read like prose a human typed on a page, not like a structured document. If a list is structurally necessary, fold it into natural sentence flow ("三件事：他欠了钱、他撒了谎、他跑了。") — do not render it as a Markdown list.
+2. **Markdown structure belongs in the chapter card and the repair report, never in the chapter draft itself.** The chapter draft is `06-chapter-drafts/Chapter-XXX.md`, but its **content** is a wall of prose, not a structured document. Use blank lines only for paragraph breaks. Do not use `**bold**`, `*italic*`, `# headers`, `- bullets`, `1. numbered lists`, `> quotes`, or backticks for code.
+3. **破折号（em-dash `—` and all variants）is 严禁过多使用.** Each chapter should have a small, deliberate number of dashes — never more than 1 dash per ~500 words of prose, and ideally much less. The default action for a middle dash in any context is **delete**, not replace. A dash is a hammer; use it when nothing else will do.
+4. **省略号 is 严禁过多使用.** Each chapter should have a small, deliberate number of ellipses — never more than 1 ellipsis per ~500 words, and ideally much less. The only valid form is the Chinese 6-dot `……` (not `...` and not `。。`). The default action for an extra ellipsis is **delete**, not replace.
+5. **引号 is 严禁过多使用.** Dialogue uses 引号 normally, but **nested quotes**, **scare-quotes for emphasis**, and **quoting common words for stylistic effect** are all prohibited. If a phrase does not need a quote to be readable, remove the quote.
+6. **Density is enforced by the Punctuation Sweep.** `check_dash.py` and `fix_dash.py` measure the count of dashes / ellipses / quotes per chapter and warn when the density is too high. The micro-repair report must record the density and the user's sign-off. If a chapter is over budget, the user must either edit the chapter or explicitly log a `prose-style-exception` row in `09-review/decisions-log.md`.
+7. **These rules are part of the prose guide.** When the prose guide is created or updated, these rules MUST be copied into it. Changing the limits (e.g. raising the per-chapter budget) is a `prose-guide-update` event logged in the decision log.
+
+> Reminder: "Default" punctuation actions in the Punctuation Sweep prefer **delete** over **replace** for dashes and ellipses. The goal is fewer showy marks, not just different showy marks.
+
 ## Stage Map
 
 ```text
@@ -165,8 +179,11 @@ Goal: turn each volume card into a sequence of chapter cards.
 
 Pre-Chapter Brief (mandatory for every chapter, including chapter 001):
 
-1. Read the current volume card, the previous chapter card (or volume opening notes for chapter 001), and the involved character / worldbuilding files.
-2. Fill `references/pre-chapter-brief-template.md` and save it as `05-chapter-cards/Chapter-XXX-pre-brief.md`.
+1. Read the current volume card.
+2. Read the previous chapter card (or volume opening notes for chapter 001).
+3. Read the previous chapter's micro-repair report at `09-review/micro-reports/Chapter-XXX-repair.md` (or volume opening notes for chapter 001). The repair report is the **latest world state** — it is the source of truth for character positions, active foreshadowing, and open conflicts. The character / worldbuilding files are the baseline, but the repair report is the delta applied on top. Skipping it is the most common source of continuity bugs.
+4. Read the involved character / worldbuilding files.
+5. Fill `references/pre-chapter-brief-template.md` and save it as `05-chapter-cards/Chapter-XXX-pre-brief.md`.
 
 Chapter card:
 
@@ -184,10 +201,11 @@ Mandatory pre-draft reading:
 
 1. The current chapter card.
 2. The previous chapter's draft (or volume opening notes for chapter 001).
-3. Every involved character file.
-4. Every relevant worldbuilding file.
-5. `03-plot/foreshadowing.md`.
-6. `00-project/正文写作指南.md` — this file is mandatory; if it does not exist, create it using `references/prose-writing-guide-template.md` and confirm with the user before continuing.
+3. The previous chapter's micro-repair report at `09-review/micro-reports/Chapter-XXX-repair.md` (or volume opening notes for chapter 001). The repair report is the **latest world state** — character positions, active foreshadowing, and open conflicts. Without it, prose will reuse the stale character / world files as if no chapter had happened.
+4. Every involved character file.
+5. Every relevant worldbuilding file.
+6. `03-plot/foreshadowing.md`.
+7. `00-project/正文写作指南.md` — this file is mandatory; if it does not exist, create it using `references/prose-writing-guide-template.md` and confirm with the user before continuing.
 
 Draft:
 
@@ -248,6 +266,55 @@ The skill has three levels of repair, each with a different trigger and scope:
 | Project Repair | After all volumes complete (optional) | Cross-volume consistency, character arcs end-state, foreshadowing close-out, theme payoff | `09-review/project-repair.md` |
 
 Skipping a Micro-Repair to "save time" is not allowed. Skipping a Volume Repair blocks the next volume's Pre-Volume Review.
+
+## File Update Timing
+
+File updates are **event-driven, not continuous**. Each file has a defined creation point, update trigger, and review point. Do not "sync" files arbitrarily — only update them when an event below fires, and log the event in `09-review/decisions-log.md`.
+
+### Timing Table
+
+| File | Create | Update (event-driven) | Review (passive) | Reference while |
+| --- | --- | --- | --- | --- |
+| `00-project/spark.md` | Phase 0 | Skip/rollback to Phase 0 | — | every later phase |
+| `00-project/positioning.md` | Phase 1 | Phase 1 confirmation revision | — | every later phase |
+| `01-worldbuilding/*` | Phase 2 | Micro-Repair (only if this chapter changes a world rule) | Volume Repair (whole-volume integrity) | Pre-Volume Review; Pre-Chapter Brief; Prose |
+| `02-characters/*` | Phase 3 | Micro-Repair (only if this chapter changes a character state) | Volume Repair (arc integrity) | Pre-Chapter Brief; Prose |
+| `03-plot/master-outline.md` | Phase 4 | **Contract — only on Phase 4 → 5 rollback**; never on whim. Any change requires a logged rollback. | Volume Repair (does the volume still serve the spine?) | Pre-Volume Review; Volume Repair |
+| `03-plot/foreshadowing.md` | Phase 4 | **Every** Micro-Repair that plants or pays off a foreshadowing item | Volume Repair (density & balance) | Pre-Chapter Brief; Prose; Micro-Repair |
+| `03-plot/reveals.md` | Phase 4 | Micro-Repair that fires a reveal | Volume Repair (pacing) | Pre-Chapter Brief; Prose |
+| `03-plot/timeline.md` | Phase 4+ | Micro-Repair (if this chapter is on the timeline) | Volume Repair (sequence check) | Pre-Chapter Brief; Prose |
+| `04-volumes/Volume-XX.md` | Phase 5 | Only by Phase 5 rollback | — | Pre-Chapter Brief; Prose |
+| `05-chapter-cards/Chapter-XXX.md` | Phase 6 | Only by Phase 6 rollback | — | Prose |
+| `06-chapter-drafts/Chapter-XXX.md` | Phase 7 | Punctuation Sweep (mandatory) → Micro-Repair (prose polish) | — | next chapter's Pre-Chapter Brief (as prior state) |
+| `00-project/正文写作指南.md` | Before first Phase 7 draft (mandatory) | Volume Repair (if style drift detected) | Volume Repair | **Every** Prose draft (mandatory) |
+| `09-review/micro-reports/Chapter-XXX-repair.md` | After every chapter (mandatory) | Append-only | — | **Next chapter's Pre-Chapter Brief (mandatory)** |
+| `09-review/volume-reports/Volume-XX-repair.md` | After every volume (mandatory) | Append-only | — | next volume's Pre-Volume Review |
+| `09-review/project-repair.md` | After all volumes (optional) | Append-only | — | final pass |
+| `09-review/decisions-log.md` | At project start | **Append** on every event below; never rewrite history | — | always |
+| `00-project/progress.md` | At project start | Every phase advance, repair completion, skip/rollback | — | always |
+
+### Decision Log Trigger Events
+
+Append a row to `09-review/decisions-log.md` on **any** of the following (append-only; never delete or rewrite history):
+
+- Phase confirmation (with date)
+- Conflict raised and the chosen repair
+- Skip or rollback between phases
+- Micro-Repair, Volume Repair, or Project Repair completion
+- Prose-guide creation or update
+- Master-outline change (rare; always tied to a rollback)
+- Punctuation Sweep stats summary (issues found, fixes applied)
+
+### Per-Phase Pre-Read Cheatsheet
+
+| Phase | Mandatory pre-read | Mandatory reference during |
+| --- | --- | --- |
+| Phase 5 Pre-Volume Review | all of `00-project/`, `01-worldbuilding/`, `02-characters/`, `03-plot/`, prior volume's Volume Repair | — |
+| Phase 6 Pre-Chapter Brief | current volume card; previous chapter card; **previous chapter's micro-repair report**; involved character / world files | — |
+| Phase 7 Prose draft | current chapter card; previous chapter's draft; **previous chapter's micro-repair report**; all involved character / world files; `03-plot/foreshadowing.md`; `00-project/正文写作指南.md` (mandatory) | — |
+| Micro-Repair | this chapter's draft; chapter card; involved character / world files | — |
+
+The **previous chapter's micro-repair report** is the source of truth for "where the world is right now". The character / world files are the baseline. The repair report is the delta applied on top. Read it in **both** Pre-Chapter Brief and Prose draft. The prose guide is style rules and is read **only** during Prose draft — it is not used for planning.
 
 ## Decision Log
 

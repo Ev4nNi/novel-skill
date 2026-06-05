@@ -14,12 +14,27 @@ The first block of the report is the **Punctuation Sweep**, which is mandatory b
 - Punctuation fixes applied:
   - trailing-dash deleted:
   - before-quote dash deleted:
-  - tone-particle replaced with ，:
-  - example replaced with :::
-  - transition replaced with ;:
-  - default replaced with ，:
+  - middle-dash deleted (default, no replacement):
+  - middle-dash replaced (semantic, requires prose-style-exception in decisions-log):
+  - ellipsis normalized (3-dot `...` or `。。` -> `……`):
+  - ellipsis deleted (over budget):
+  - quote normalized (half-width -> full-width):
+  - nested quote deleted:
+  - quote deleted (over budget):
 - Punctuation fixes left to user (with reason):
 - Punctuation sweep signed off:
+
+## Style Density Check (mandatory)
+- Word count:
+- Dash count (all variants):      budget ≤ 6, ideal ≤ 3
+- Ellipsis count (`……` only):   budget ≤ 6, ideal ≤ 3
+- Quote count (dialogue + nested + scare):  budget ≤ 30, ideal ≤ 20
+- Markdown structural marks in draft body: budget = 0
+  - bold/italic/headers/lists/blockquotes/code spans found:
+  - any found must be converted to natural prose before Micro-Repair proceeds
+- Over budget? (yes/no):
+  - if yes: prose-style-exception row appended to decisions-log.md, or chapter edited
+- Style density signed off:
 
 ## User Confirmation
 - Draft reviewed:
