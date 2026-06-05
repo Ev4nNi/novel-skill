@@ -15,10 +15,11 @@ novel-project/
   02-characters/
   03-plot/
   04-volumes/
-  05-chapters/
-  06-timeline/
-  07-lore-index/
-  08-review/
+  05-chapter-cards/
+  06-chapter-drafts/
+  07-timeline/
+  08-lore-index/
+  09-review/
 ```
 
 Use the same layout for Obsidian and plain Markdown.
@@ -46,11 +47,12 @@ Advance only after the user confirms the current stage.
 - `01-worldbuilding`: rules, factions, geography, power system
 - `02-characters`: character cards and relationship updates
 - `03-plot`: master outline, arcs, conflict design, foreshadowing
-- `04-volumes`: volume or arc plans
-- `05-chapters`: chapter cards and chapter drafts
-- `06-timeline`: chronology and event log
-- `07-lore-index`: locations, terms, items
-- `08-review`: consistency checks and revision notes
+- `04-volumes`: volume or arc cards
+- `05-chapter-cards`: chapter cards with objectives, conflicts, information release, perspective
+- `06-chapter-drafts`: chapter drafts/prose generated from chapter cards
+- `07-timeline`: chronology and event log
+- `08-lore-index`: rapid index of all locations, terms, items, characters for consistency checks and quick lookup during long-form writing
+- `09-review`: consistency check reports, revision notes, version comparison
 
 ## Update Rules
 
@@ -64,7 +66,7 @@ When a volume is completed, immediately repair these files before starting the n
 - `03-plot/master-outline.md`
 - `03-plot/foreshadowing.md`
 - `03-plot/reveals.md`
-- `06-timeline/` files
+- `07-timeline/` files
 - `00-project/正文写作指南.md` if the writing rhythm or guardrails need adjustment
 
 ## Confirmation Record

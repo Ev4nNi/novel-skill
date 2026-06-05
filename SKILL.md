@@ -18,9 +18,9 @@ Confirm the project structure with the user before each major stage. Do not trea
 3. Continue from the current stage instead of rebuilding the whole project.
 4. Confirm the framework for the current stage with the user before creating files or content.
 5. Default to this order unless the user explicitly asks to skip ahead:
-   `idea -> positioning -> worldbuilding -> characters -> master outline -> volumes -> chapters -> prose -> knowledge-base updates`
+   `idea -> positioning -> worldbuilding -> characters -> master outline -> volumes -> chapter cards -> chapter drafts -> prose -> knowledge-base updates`
 6. Before drafting prose, read the project's `00-project/正文写作指南.md` if it exists. If it does not exist, confirm whether to create it first.
-7. Write prose from a chapter card, not directly from a vague prompt.
+7. Write prose from a chapter card in `05-chapter-cards/`, save the draft to `06-chapter-drafts/`.
 8. Treat knowledge-base updates as part of writing, not optional cleanup.
 9. Guide the user one step at a time. Do not generate the complete story content in a single response.
 
@@ -32,7 +32,9 @@ Classify the request before acting:
 - partial setting
 - existing character files
 - existing outline
+- active chapter cards
 - active chapter drafting
+- prose generation
 - continuity repair or revision
 
 If files already exist, read the relevant ones before proposing new material.
@@ -74,8 +76,9 @@ If the user wants adjustments, revise the current stage before continuing.
 - Read `references/worldbuilding-template.md` when building setting files.
 - Read `references/character-template.md` when creating or updating character files.
 - Read `references/master-outline-template.md` when building the story-level outline.
-- Read `references/volume-template.md` when splitting the story into volumes or arcs.
-- Read `references/chapter-template.md` before drafting a chapter.
+- `04-volumes/` when creating or updating volume cards.
+- `05-chapter-cards/` when drafting a chapter card.
+- `06-chapter-drafts/` when writing chapter prose.
 - Read `references/prose-writing-guide-template.md` when creating or updating `00-project/正文写作指南.md`.
 - Read `references/foreshadowing-template.md` when planting or paying off a setup.
 - Read `references/timeline-template.md` when a scene changes chronology or event order.
@@ -134,7 +137,7 @@ When a volume is completed, immediately review and repair the related core files
 - `03-plot/master-outline.md`
 - `03-plot/foreshadowing.md`
 - `03-plot/reveals.md`
-- `06-timeline/` timeline files
+- `07-timeline/` timeline files
 
 Treat these repairs as mandatory maintenance, not optional cleanup.
 
