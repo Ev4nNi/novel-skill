@@ -1,13 +1,21 @@
 # Character Template
 
+Use this for `02-characters/<name>.md` (Phase 3). One file per major character.
+
 ````markdown
 # [[Character Name]]
+
+## Status
+- Phase: 3
+- Type: major / minor
+- State: draft / confirmed
 
 ## User Confirmation
 - Role framework confirmed:
 - Relationship scope confirmed:
 - Arc depth confirmed:
 - Keep as major or minor character:
+- Sign-off date:
 
 ## Identity
 - Role:
@@ -23,7 +31,7 @@
 
 ## Story Function
 - Narrative role:
-- First appearance:
+- First appearance (volume / chapter):
 - Core conflict:
 - Character arc:
 
@@ -37,6 +45,10 @@
 - Past defining event:
 - Mid-story turning point:
 - Late-story transformation:
+
+## State Log (updated by Micro-Repair)
+- End of Volume XX: (one-line state)
+- End of Chapter XXX: (one-line state)
 
 ## Notes
 - Voice cues:

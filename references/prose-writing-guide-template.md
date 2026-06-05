@@ -1,57 +1,82 @@
 # Prose Writing Guide Template
 
-Use this template for `00-project/正文写作指南.md`.
+Use this template for `00-project/正文写作指南.md` (Phase 7). This file is **mandatory** before drafting any chapter. If it does not exist when Phase 7 starts, create it first and confirm with the user.
 
 ````markdown
 # 正文写作指南
+
+## Status
+- Mandatory: yes
+- Created in phase: Phase 7
+- Last updated:
+- Trigger for update: (e.g. volume repair, prose drift)
 
 ## User Confirmation
 - Tone confirmed:
 - Rhythm confirmed:
 - Conflict intensity confirmed:
 - Prose density confirmed:
+- Sign-off date:
 
 ## Core Principles
-- Plot rhythm:
-- Consequence realism:
-- Character consistency:
-- Foreshadowing discipline:
+- Plot rhythm (clause pacing, sentence rhythm):
+- Consequence realism (no deus-ex-machina without setup):
+- Character consistency (voice and behavior must match the character card):
+- Foreshadowing discipline (every payoff traces back to a logged setup):
+- POV discipline (no head-hopping without chapter card approval):
 
 ## Required Reading Before Drafting
 - Current chapter card
-- Previous relevant chapter or summary
+- Current chapter pre-brief
+- Previous relevant chapter draft (or volume opening notes for chapter 001)
 - Involved character files
 - Relevant worldbuilding files
-- Foreshadowing tracker
-- Timeline files
+- `03-plot/foreshadowing.md`
+- `03-plot/reveals.md` (if the chapter is scheduled to reveal something)
+- Timeline files for any event ordering
 
 ## Pre-Draft Checklist
-- Current chapter objective confirmed:
-- Current chapter conflict confirmed:
+- Chapter objective confirmed:
+- Chapter conflict confirmed:
 - Required information release confirmed:
 - Required setup or payoff confirmed:
-- Continuity risks checked:
+- Continuity risks checked (foreshadowing / timeline / lore):
 
 ## Drafting Rules
-- Keep character voice consistent:
-- Respect world rules and costs:
-- Do not skip chapter-card obligations:
-- Do not invent major setting changes without confirmation:
+- Keep character voice consistent with the character card
+- Respect world rules and costs (no rule invented in the chapter)
+- Do not skip chapter-card obligations
+- Do not invent major setting changes without user confirmation
+- If a new setting rule emerges, log it for lore-index update
+- If a new foreshadowing is planted, log it in `03-plot/foreshadowing.md` before ending the chapter
 
-## Post-Draft Checklist
-- Character files updated:
-- Foreshadowing tracker updated:
-- Timeline updated:
-- Worldbuilding core updated if needed:
-- Master outline updated if needed:
+## Post-Draft Checklist (Micro-Repair input)
+- Character files updated if any state changed
+- Foreshadowing tracker updated (plant / payoff / status)
+- Reveals tracker updated if a reveal happened
+- Timeline updated if chronology changed
+- Lore-index updated if a new term / place / item appeared
+- `00-project/progress.md` updated
+- `09-review/decisions-log.md` updated
 
 ## Volume-End Repair Rule
 
-When a volume is completed, immediately repair:
+When a volume is completed, in addition to the per-chapter micro-repairs, run a Volume Repair:
 
-- worldbuilding core
-- master outline
-- foreshadowing tracker
-- reveals tracker
-- timeline files
+- Worldbuilding core files
+- Master outline
+- Foreshadowing tracker
+- Reveals tracker
+- Timeline files
+- Lore-index
+- 正文写作指南.md itself, if writing rhythm or guardrails need adjustment
+
+## Project-Level Repair Rule
+
+After the final volume completes, run a Project Repair:
+
+- Cross-volume foreshadowing close-out
+- Character arc end-state confirmation
+- Theme payoff audit
+- Final timeline and lore-index pass
 ````
