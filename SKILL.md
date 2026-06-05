@@ -196,12 +196,46 @@ Draft:
 
 Micro-Repair (mandatory after every chapter draft):
 
-1. Fill `references/micro-repair-template.md` and save to `09-review/micro-reports/Chapter-XXX-repair.md`.
-2. Update the impacted files (character, worldbuilding, foreshadowing, timeline, lore-index).
-3. Update `00-project/progress.md`.
-4. Log the repair in the decision log.
+1. Run the **Punctuation Sweep** first (see `references/punctuation-sweep.md`). Use `check_dash.py` to inspect, then `fix_dash.py` to repair. Log the sweep stats in the micro-repair report.
+2. Fill `references/micro-repair-template.md` and save to `09-review/micro-reports/Chapter-XXX-repair.md`.
+3. Update the impacted files (character, worldbuilding, foreshadowing, timeline, lore-index).
+4. Update `00-project/progress.md`.
+5. Log the repair in the decision log.
 
 Required output: per chapter — `06-chapter-drafts/Chapter-XXX.md`, `09-review/micro-reports/Chapter-XXX-repair.md`.
+
+## Punctuation Sweep
+
+The skill ships with two helper scripts at the repo root: `check_dash.py` and `fix_dash.py`. They operate on `06-chapter-drafts/` and apply the punctuation rules in `00-project/正文写作指南.md`.
+
+Workflow per chapter:
+
+1. Run `python check_dash.py` — produce a read-only report of every punctuation issue with a fix suggestion.
+2. Review the report with the user. Confirm any non-obvious cases (semantic middle-dash replacements).
+3. Run `python fix_dash.py` — apply the agreed fixes. The script is idempotent.
+4. Record the sweep stats (issues found, fixes applied) in the micro-repair report.
+
+The Sweep is mandatory before Micro-Repair on every chapter. It is also recommended (but not mandatory) after large Volume Repair rewrites.
+
+### What the scripts catch
+
+- em-dash `—`, en-dash `–`, horizontal bar `―`, full-width `——`, double `--`
+- duplicate commas `，，`
+- redundant terminal commas (`。，`, `！，`, `？，`, `；，`, `：，`)
+- leading-line commas
+
+### Middle-dash semantic replacement
+
+When a dash sits between characters (not at line start, line end, or before a quote), the script replaces it based on the surrounding context:
+
+| Context | Replaced with |
+| --- | --- |
+| tone particle (`啊` `哦` `呀` `呢` `嘛` `吧` `唉` `哼` `嘿` `哈` `呵` `嗯` `呜`) | `，` |
+| example/clarification (`如` `比如` `例如` `即` `也就是`) | `:` |
+| transition (`但` `可` `却` `然而` `不过` `只是` `可惜`) | `；` |
+| default | `，` |
+
+Always confirm the "default" cases with the user before applying — they are the most likely to need a different choice.
 
 ## Two-Tier Repair System
 

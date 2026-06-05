@@ -59,6 +59,27 @@ Use this template for `00-project/正文写作指南.md` (Phase 7). This file is
 - `00-project/progress.md` updated
 - `09-review/decisions-log.md` updated
 
+## Punctuation Rules (enforced by Punctuation Sweep)
+
+The skill runs `check_dash.py` and `fix_dash.py` against `06-chapter-drafts/` after every chapter draft. The rules below MUST match what the scripts apply. If you change these rules, update the scripts in the same commit and log a `prose-guide-update` event in `09-review/decisions-log.md`.
+
+### Dash handling
+
+- Line-start dash: keep (Markdown list marker)
+- Trailing dash at end of file/paragraph: delete
+- Dash immediately before a closing quote (`"…—"`, `…—"`): delete
+- Middle dash followed by tone particle (`啊 哦 呀 呢 嘛 吧 唉 哼 嘿 哈 呵 嗯 呜`) or preceded by one: replace with `，`
+- Middle dash followed by example/clarification word (`如 比如 例如 即 也就是`) or preceded by one: replace with `:`
+- Middle dash followed by transition word (`但 可 却 然而 不过 只是 可惜`) or preceded by one: replace with `；`
+- Middle dash in any other context: replace with `，` (default)
+
+### Other punctuation
+
+- No `，，` (duplicate commas)
+- No `。，` `！，` `？，` `；，` `：，` (terminal-comma combinations)
+- No leading-line comma
+- All Chinese punctuation, no half-width punctuation inside Chinese sentences
+
 ## Volume-End Repair Rule
 
 When a volume is completed, in addition to the per-chapter micro-repairs, run a Volume Repair:
