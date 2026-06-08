@@ -61,10 +61,10 @@ CN_CHAR_RE = re.compile(r'[\u4e00-\u9fff]')
 BUDGET_DASH = 6
 BUDGET_ELLIPSIS = 6
 
-# 字数阈值
-MIN_CHARS = 1500
+# 字数阈值 (与 count_chars.py 保持一致)
 IDEAL_MIN_CHARS = 2500
 IDEAL_MAX_CHARS = 3500
+MIN_CHARS = 1500
 MAX_CHARS = 5000
 
 
