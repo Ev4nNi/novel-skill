@@ -50,6 +50,12 @@ These checks MUST be completed before Micro-Repair proceeds. Each check is a pas
 - Consecutive sentences of similar length (>3): (none / count / location)
 - Short sentences (≤8 chars) per paragraph: (count, must be ≥ 1)
 
+### Q5b. Pronoun Density (代词密度)
+- Paragraphs with ≥3 consecutive same-pronoun starts ("他/她/它"): (none / list paragraph numbers)
+- Total "他" count in chapter:
+- Total "她" count in chapter:
+- Pronouns replaced with omission/name/identity/action: (count)
+
 ### Q6. Dialogue Quality
 - Max consecutive dialogue-only exchanges: (count, must be ≤ 5)
 - Dialogue with subtext vs direct info-dump: (ratio or notes)

@@ -46,6 +46,8 @@ These rules govern writing quality, not formatting. They are equally non-negotia
 
 **Q8. 具体细节优先：** 禁止空泛名词（"武器"、"食物"）和空泛副词（"格外"、"异常"）。必须用具体名词和动词。
 
+**Q9. 代词去重：** 禁止同一段内连续3次以上同一代词开头（"他站起来。他走到门口。他打开门。"）。能省略就省略，或用名字/身份/动作替代代词。
+
 > Reminder: "Default" punctuation actions prefer **delete** over **replace**. The goal is fewer showy marks, not just different showy marks.
 
 ## Two-Tier Repair System

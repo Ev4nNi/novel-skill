@@ -197,7 +197,26 @@ Use this template for `00-project/正文写作指南.md` (Phase 7). This file is
 - ❌ "走了很远" → ✅ "走了三里地"
 - ❌ "等了很久" → ✅ "香烧了一半"
 
-### 9. 人工书写（manual handwriting），not Markdown
+### 9. 代词去重 — 强制
+
+真人写作会自然省略代词或用名字/身份/动作替代。AI写作则反复使用"他/她"开头每一句，读起来机械啰嗦。
+
+**强制规则：**
+- **禁止同一段内连续出现 3 次以上同一代词开头**（"他"、"她"、"它"、"他们"等）。第 3 次必须换说法：省略主语、换名字、换身份词、换角度。
+- **能省略就省略。** 中文是主语省略语言，上下文明确时不需要每句都带代词。
+  - ❌ "他站起来。他走到门口。他打开门。他看了看外面。"
+  - ✅ "他站起来，走到门口，打开门看了看外面。"
+  - ✅ "他站起来。走到门口。门开了，外面空无一人。"
+- **代词替换策略（交替使用）：**
+  1. 省略主语（首选）：动作连贯时直接用动词
+  2. 用名字/绰号：偶尔用角色名替代代词
+  3. 用身份/关系：用"那男人"、"她父亲"、"那个穿灰衣的"等
+  4. 换角度描写：从环境或对方的视角切入
+  5. 用动作替代：不写"他"做什么，写动作本身（"门被推开"、"脚步停在门口"）
+- **"他/她"密度参考：** 每段≤3个为宜，超过5个必须改写。
+- **禁止"他…她…"来回切换开头：** 如果一段内涉及两人，交替用代词开头会像乒乓。用名字或动作区分。
+
+### 10. 人工书写（manual handwriting），not Markdown
 
 The chapter draft is a wall of prose a human typed on a page. It is **not** a structured document.
 
@@ -211,7 +230,7 @@ The chapter draft is a wall of prose a human typed on a page. It is **not** a st
 
 Markdown structure belongs in the chapter card and the repair report, **never** in the chapter draft itself.
 
-### 10. 破折号 / 省略号 — 严禁过多使用
+### 11. 破折号 / 省略号 — 严禁过多使用
 
 These marks are the "showy" punctuation of Chinese prose. They are easy to over-use and hard to read when they pile up. The Punctuation Sweep enforces a strict per-chapter budget. If a chapter is over budget, the user must either edit the chapter or log a `prose-style-exception` row in `10-review/decisions-log.md`.
 
@@ -225,12 +244,12 @@ Density is **per chapter**, not per scene.
 
 The word count is a hard warning (not an exception-eligible style choice). It is a structural concern — chapters that are too short or too long are usually a sign of bad chapter boundaries, not a style preference.
 
-### 11. 标点符号细则
+### 12. 标点符号细则
 
 - **破折号 (dashes).** Only used for a true break in thought or a hard aside. Never as a stand-in for a comma, never as decorative flourishes, never as Markdown list markers in the draft. The only legitimate form is the em-dash `—` (or full-width `——` for emphasis). Variants like `–` (en-dash), `―` (horizontal bar), and `--` (double hyphen) are normalization errors and are replaced with `—` or deleted.
 - **省略号 (ellipsis).** Only the 6-dot Chinese form `……` is allowed. The 3-dot `...` and the double-period `。。` are normalization errors and are normalized to `……` (or deleted if the chapter is over budget).
 
-### 12. 章节标题（首行，强制）
+### 13. 章节标题（首行，强制）
 
 Every chapter draft MUST start with a title line. This is the only structural exception to the "no Markdown in the body" rule.
 
@@ -277,8 +296,9 @@ Every chapter draft MUST start with a title line. This is the only structural ex
 3. **角色声音检查：** 遮住角色名字，能否分辨每段对话是谁说的？如果不能，增加声音差异化。
 4. **感官细节检查：** 每500字是否包含至少2个具体感官细节？如不足，补充。
 5. **句子节奏检查：** 是否有连续3句以上长度相近？是否有连续3句以上同一主语开头？如有，改写。
-6. **对话检查：** 是否有纯对话连续超过5轮？对话是否有潜台词？是否有角色像念说明书一样解释设定？如有，改写。
-7. **具体化检查：** 是否有空泛描述（如"武器"、"食物"、"很好看"）？改为具体名词。
+6. **代词密度检查：** 每段"他/她"开头的句子是否超过3个？是否有连续3次同一代词开头？如有，省略或替换。
+7. **对话检查：** 是否有纯对话连续超过5轮？对话是否有潜台词？是否有角色像念说明书一样解释设定？如有，改写。
+8. **具体化检查：** 是否有空泛描述（如"武器"、"食物"、"很好看"）？改为具体名词。
 
 ## Post-Draft Checklist (Micro-Repair input)
 - Character files updated if any state changed
