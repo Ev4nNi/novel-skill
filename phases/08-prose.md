@@ -20,27 +20,25 @@
 ## Draft
 
 1. Write the chapter prose and save to `06-chapter-drafts/Chapter-XXX.md`.
-2. The **first line** MUST be the chapter title in format: `第N章"title"` (Chinese numerals, full-width quotes). Examples: `第一章"雨夜来客"`, `第十二章"迷宫"`.
+2. The **first line** MUST be the chapter title in format: `第N章"title"` (Chinese numerals, any quote type accepted: Chinese double/single, English double/single). Examples: `第一章"雨夜来客"`, `第十二章'迷宫'`, `第三章'重逢'`.
 3. Pause for user feedback after the draft.
 
 ## Micro-Repair (mandatory after every chapter draft)
 
 1. Run the **Punctuation Sweep** first (see `references/punctuation-sweep.md`). Use `scripts/check_dash.py` to inspect, then `scripts/fix_dash.py` to repair. Log the sweep stats in the micro-repair report.
-2. Run `scripts/check_density.py` for a detailed audit if the chapter looks suspicious.
-3. Fill `references/micro-repair-template.md` and save to `10-review/micro-reports/Chapter-XXX-repair.md`.
-4. Update the impacted files (character, worldbuilding, foreshadowing, timeline, lore-index).
-5. Update `00-project/progress.md`.
-6. Log the repair in the decision log.
+2. Fill `references/micro-repair-template.md` and save to `10-review/micro-reports/Chapter-XXX-repair.md`.
+3. Update the impacted files (character, worldbuilding, foreshadowing, timeline, lore-index).
+4. Update `00-project/progress.md`.
+5. Log the repair in the decision log.
 
 ## Punctuation Sweep
 
-The skill ships with three helper scripts in `scripts/`:
+The skill ships with two helper scripts in `scripts/`:
 
 - `scripts/check_dash.py` — quick sweep. Reports every punctuation issue with a fix suggestion + per-chapter density table. Read-only.
 - `scripts/fix_dash.py` — applies the agreed fixes in place. Idempotent.
-- `scripts/check_density.py` — detailed audit. Reports word count + full density breakdown. Read-only.
 
-All three operate on `06-chapter-drafts/` (relative to the current working directory) by default. Pass a different folder as the first CLI argument to override.
+All scripts operate on `06-chapter-drafts/` (relative to the current working directory) by default. Pass a different folder as the first CLI argument to override.
 
 ### Workflow per chapter
 
@@ -55,13 +53,10 @@ python scripts/check_dash.py
 # 3. Apply fixes
 python scripts/fix_dash.py
 
-# 4. Detailed audit (optional)
-python scripts/check_density.py
-
-# 5. Re-inspect to confirm clean
+# 4. Re-inspect to confirm clean
 python scripts/check_dash.py
 
-# 6. Record stats in micro-repair report
+# 5. Record stats in micro-repair report
 ```
 
 The Sweep is mandatory before Micro-Repair on every chapter.

@@ -24,7 +24,27 @@ These are non-negotiable. They shape how every chapter is drafted.
 5. **引号 is 严禁过多使用.** Disallowed: nested quotes, scare-quotes, quoting common words.
 6. **Density is enforced by the Punctuation Sweep.** If a chapter is over budget, the user must edit or log a `prose-style-exception` row.
 7. **These rules are part of the prose guide.** When the prose guide is created or updated, these rules MUST be copied into it.
-8. **The first line of every chapter draft is the title.** Format: `第N章"title"` (Chinese numerals, full-width quotes). Missing or invalid title = hard error, no exception.
+8. **The first line of every chapter draft is the title.** Format: `第N章"title"` (Chinese numerals, quotes of any type accepted: Chinese double/single, English double/single). Missing or invalid title = hard error, no exception.
+
+### Quality Rules (正文质量强制规则)
+
+These rules govern writing quality, not formatting. They are equally non-negotiable. See `references/prose-writing-guide-template.md` for the full specification.
+
+**Q1. 展示而非告知（Show, Don't Tell）：** 禁止直接陈述情绪或状态（"他很紧张"、"她感到害怕"），必须用动作、表情、感官细节来表现。这是消除AI腔调的第一规则。
+
+**Q2. 角色声音差异化：** 每个角色必须有2-3个独特的说话特征（句式长短、口头禅、语气词、称呼方式等）。遮住角色名后，读者应能分辨谁在说话。
+
+**Q3. AI腔调禁用词：** 严禁使用"就在这时"、"与此同时"、"他心想"、"仿佛"、"莫名的"、"说不出的"等AI典型标记词。详见正文写作指南的禁用词清单。
+
+**Q4. 感官细节强制：** 每个新场景第一段必须有至少1个具体感官细节。每500字至少2个。细节必须具体可感知，禁止形容词堆砌。
+
+**Q5. 句子节奏控制：** 禁止连续3句以上长度相近。每段必须包含至少一个≤8字短句。紧张场景短句≥50%。
+
+**Q6. 对话质量：** 对话必须有潜台词。禁止纯对话连续超过5轮（必须穿插动作）。禁止用对话解释设定。禁止"他说道"等AI式对话引导词。
+
+**Q7. 场景过渡：** 新场景第一句必须用具体细节标记时空，禁止"第二天早上"、"与此同时"等抽象说明。
+
+**Q8. 具体细节优先：** 禁止空泛名词（"武器"、"食物"）和空泛副词（"格外"、"异常"）。必须用具体名词和动词。
 
 > Reminder: "Default" punctuation actions prefer **delete** over **replace**. The goal is fewer showy marks, not just different showy marks.
 

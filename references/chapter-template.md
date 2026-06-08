@@ -37,4 +37,7 @@ Use this for `05-chapter-cards/Chapter-XXX.md` (Phase 6). Requires a Pre-Chapter
 - Prose guide checked:
 - Pre-Chapter Brief checked:
 - Risks inherited from brief (and how handled):
+- **Voice plan:** (which characters appear, their 2-3 voice features each)
+- **Sensory detail plan:** (at least 3 specific sensory details for this chapter)
+- **Key scene rhythm:** (tense scene = short sentences, calm scene = mixed)
 ````

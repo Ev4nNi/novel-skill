@@ -66,10 +66,9 @@ All templates live in `references/`:
 
 ## Scripts
 
-Three helper scripts live in `scripts/`:
+Two helper scripts live in `scripts/`:
 
 - `scripts/check_dash.py` — quick punctuation sweep (read-only)
 - `scripts/fix_dash.py` — apply agreed fixes (read-write, idempotent)
-- `scripts/check_density.py` — detailed density audit (read-only)
 
-All operate on `06-chapter-drafts/` by default. Pass a different folder as the first CLI argument.
+Both operate on `06-chapter-drafts/` by default. Pass a different folder as the first CLI argument.

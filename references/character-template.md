@@ -35,6 +35,16 @@ Use this for `02-characters/<name>.md` (Phase 3). One file per major character.
 - Core conflict:
 - Character arc:
 
+## Voice Profile (声音特征 — 写作时强制使用)
+- Speech rhythm: (short sentences / long-winded / measured / rapid-fire)
+- Catchphrases / verbal tics: (specific words or phrases they overuse)
+- Particles / tone words: (嘛/呢/啊/从不使用语气词等)
+- Addressing style: (how they refer to others — name, nickname, title, pronoun)
+- Interruption habit: (do they interrupt others? do they let others finish?)
+- Pre-speech action: (habitual gesture before speaking — sigh, cough, light a cigarette, etc.)
+- Dialogue purpose: (how they communicate — direct, evasive, sarcastic, storytelling, questioning)
+- **Voice test:** If you hide their name, can the reader tell it's them speaking?
+
 ## Relationships
 - Allies:
 - Rivals:
@@ -51,7 +61,6 @@ Use this for `02-characters/<name>.md` (Phase 3). One file per major character.
 - End of Chapter XXX: (one-line state)
 
 ## Notes
-- Voice cues:
 - Physical markers:
 - Continuity notes:
 ````
