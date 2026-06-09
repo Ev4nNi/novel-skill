@@ -37,6 +37,16 @@ These checks MUST be completed before Micro-Repair proceeds. Each check is a pas
 - Banned dialogue tags found ("他说道", "回答道"): (none / count / list)
 - All removed or rewritten: (yes / no)
 
+### Q2b. Punctuation Semantics (标点语义边界)
+- Commas used to connect independent clauses (must be period): (none / list)
+- Decorative quotes around common words ("他"很"生气"): (none / count / list)
+- Exclamation marks total: (count, recommended ≤ 3, > 5 = fail)
+- Question marks used for statements or exclamations: (none / count)
+- Ellipsis used as decorative pause (夜色很深……风很冷……): (none / list)
+- Parentheses with deletable content (decorative parentheticals): (none / list)
+- Periods used to artificially break connected action sequences: (none / list)
+- All punctuation carries its proper semantic role: (yes / no)
+
 ### Q3. Voice Differentiation
 - Characters appearing in this chapter:
 - Voice test: can you tell who is speaking without the name tag? (yes / no — if no, specify which character)

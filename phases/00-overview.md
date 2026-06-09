@@ -48,6 +48,8 @@ These rules govern writing quality, not formatting. They are equally non-negotia
 
 **Q9. 代词去重：** 禁止同一段内连续3次以上同一代词开头（"他站起来。他走到门口。他打开门。"）。能省略就省略，或用名字/身份/动作替代代词。
 
+**Q10. 标点语义边界：** 每个标点必须承担其本分职责。禁止用句号断开连贯动作、逗号连接独立陈述、引号装饰普通词、感叹号代替描写、省略号制造伪深沉、括号加内心独白。一章内感叹号≤3。详见正文写作指南的"标点符号语义边界"章节。
+
 > Reminder: "Default" punctuation actions prefer **delete** over **replace**. The goal is fewer showy marks, not just different showy marks.
 
 ## Two-Tier Repair System
